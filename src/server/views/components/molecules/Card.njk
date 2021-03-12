@@ -1,0 +1,18 @@
+{% macro Card(data) %}
+  
+<div
+  class="card"
+  data-id="{{ data.id }}"
+>
+  <a href="#">
+    <div class="card__content">
+      <h3>{{ data.title }}</h3>
+      <p>{{ data.release_date.split('-')[0] }}</p>
+    </div>
+    <div class="card__background">
+      <img src="https://image.tmdb.org/t/p/original{{data.backdrop_path}}" alt="{{data.title}}" />
+    </div>
+  </a>
+</div>
+
+{% endmacro %}

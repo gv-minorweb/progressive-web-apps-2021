@@ -1,0 +1,31 @@
+{# Components #}
+{% from "components/atoms/Button.njk" import Button %}
+{% from "components/organisms/Slider.njk" import Slider %}
+
+{% macro Hero(data) %}
+
+<article class="hero" data-id="${id}">
+  <div class="hero__content">
+    <div class="container">
+      <p class="hero__content__release" >{{ data[0].release_date.split('-', 1)[0] }}</p>
+      <h1 class="hero__content__title">{{ data[0].title }}</h1>
+      <p class="hero__content__description" >{{ data[0].overview }}</p>
+      {{ Button({ text: 'Button text' }) }}
+    </div>
+  </div>
+
+  <div class="hero__nav row">
+    <div class="container">
+      <h2 class="row__header">In Theatres</h2>
+    </div>
+
+    {{ Slider(data) }}
+    
+  </div>
+
+  <div class="hero__background">
+    <img src="https://image.tmdb.org/t/p/original{{ data[0].backdrop_path }}" alt="{{ data[0].title }}" />
+  </div>
+</article>
+  
+{% endmacro %}

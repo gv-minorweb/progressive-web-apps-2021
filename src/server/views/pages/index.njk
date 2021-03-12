@@ -1,0 +1,10 @@
+{% extends "templates/default.njk" %}
+
+{# Components #}
+{% from "components/organisms/Hero.njk" import Hero %}
+
+{% block content %}
+
+  {{ Hero(data) }}
+  
+{% endblock %}

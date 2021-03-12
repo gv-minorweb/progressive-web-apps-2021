@@ -1,0 +1,47 @@
+{
+  "name": "progressive-web-apps-2021",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "engines": {
+    "node": ">=14.15.0",
+    "npm": ">=6.14.8"
+  },
+  "scripts": {
+    "start": "node src/server/server.js",
+    "dev": "nodemon src/server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gv-minorweb/progressive-web-apps-2021.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gv-minorweb/progressive-web-apps-2021/issues"
+  },
+  "homepage": "https://github.com/gv-minorweb/progressive-web-apps-2021#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.1",
+    "nunjucks": "^3.2.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.8",
+    "@babel/preset-env": "^7.13.9",
+    "babel-loader": "^8.2.2",
+    "css-loader": "^5.1.1",
+    "eslint": "^7.21.0",
+    "eslint-plugin-node": "^11.1.0",
+    "mini-css-extract-plugin": "^1.3.9",
+    "nodemon": "^2.0.7",
+    "optimize-css-assets-webpack-plugin": "^5.0.4",
+    "postcss-loader": "^5.1.0",
+    "sass-loader": "^11.0.1",
+    "style-loader": "^2.0.0",
+    "webpack": "^5.24.4",
+    "webpack-cli": "^4.5.0"
+  }
+}
