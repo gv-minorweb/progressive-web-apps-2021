@@ -9,6 +9,7 @@ const { port } = require('./config')
 
 // Routes
 const indexRouter = require('./routes/index')
+const movieRouter = require('./routes/movie')
 
 // Create express app
 const app = express()
@@ -24,6 +25,7 @@ nunjucks.configure('src/server/views', {
 
 // Use routes
 app.use('/', indexRouter)
+app.use('/movie', movieRouter)
 
 // Start app
 app.listen(port, () => {
