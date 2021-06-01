@@ -27,6 +27,24 @@ In production CSS and JS files are minified.
 
 - `npm run build`  
 _Generates static HTML files and outputs them into `dist` directory._
+
+It's also possible to build just static files, HTML files or watch them with one of the commands in the `package.json` file:
+
+```
+"scripts": {
+  "prestart": "npm run build:html",
+  "start": "webpack serve --config webpack.dev.js",
+  "poststart": "npm run watch:html",
+  "build": "npm-run-all build:*",
+  "build:static": "webpack --config webpack.prod.js",
+  "build:html": "node config/tasks/common/html.js",
+  "serve": "serve dist",
+  "watch": "run-p watch:*",
+  "watch:html": "chokidar 'src/server/views/**/*.njk' --command 'npm run build:html'",
+  "watch:static": "chokidar 'src/client/**/*' --command 'npm run build:static'",
+}
+```
+
 ## Project structure
 
 Initially this project started as a server side application, so all HTML files still reside in the `server` directory, mainly `server/views`.
@@ -34,6 +52,10 @@ Initially this project started as a server side application, so all HTML files s
 For the HTML I use [Nunjucks](https://mozilla.github.io/nunjucks/) as templating engine.
 
 For the styles I use SASS, although for the purpose of this application the css isn't split up in separate files.
+
+I've built this application with scalability in mind, splitting up development and production tasks/files for optimal build times. As mentioned earlier, during development files are written to memory and are not minified, for production they are.
+
+Each task lives in its own file, i.e. a separate css build task for both development and production where minification settings are configured.
 
 ```js
 .
@@ -61,4 +83,31 @@ For the styles I use SASS, although for the purpose of this application the css 
 ├── webpack.dev.js // Extends common config
 ├── webpack.prod.js // Extends common config
 └── package.json
+```
+
+
+
+## Optimized application
+
+Webpack is used to build, bundle and optimize all files. With the exception of the HTML files that are statically generated using Node.
+
+By optimizing/minifying static files such as CSS and JavaScript I was able to get great scores across the board when running Lighthouse in Google Chrome. Having said that, the application as it stands is already very small in the first place, so these optimizations may not be noticable.
+
+External (large) images that I have no control over take some time to download. If I were to actually push this application to production I would want to download and save all external images locally, then optimize them during the build process and serve only small image files.
+
+![](docs/metrics.png)
+
+## Progressive Web App
+
+![](docs/pwa-install.png)
+
+This is a Progressive Web App, meaning it's installable, files are cached and served offline where possible. Since all detail pages are statically generated with an `index.html` file, those are also available offline (i.e. `/movie/337404/index.html`).
+
+```js
+const PRECACHE_URLS = [
+  'index.html',
+  './', // Alias for index.html
+  '/assets/css/main.css',
+  'main.js'
+];
 ```
