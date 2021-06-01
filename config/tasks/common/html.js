@@ -9,7 +9,6 @@ const writeFile = require('../../utils/writeFile')
 const generateHomePage = async () => {
   const { results: data } = await getData('movie/now_playing')
   const html = renderTemplate('pages/index.njk', data)
-
   await writeFile('./dist', 'index.html', html)
 }
 
@@ -19,7 +18,6 @@ const generateMoviePages = async () => {
   data.forEach(async ({ id }) => {
     const movieData = await getData(`movie/${id}`)
     const html = renderTemplate('pages/movie.njk', movieData)
-
     await writeFile(`./dist/movie/${id}`, 'index.html', html)
   })
 }

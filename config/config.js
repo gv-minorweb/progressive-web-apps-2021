@@ -5,6 +5,8 @@ const appRoot = require('app-root-path')
 const webpackConfig = {
   paths: {
     root: appRoot,
+
+    publicPath: '/',
     
     // Source paths of the project, work in here
     src: {

@@ -1,16 +1,20 @@
 const config = require('./config/config')
 
-const { GenerateSW } = require('workbox-webpack-plugin')
-
 const configureJs = require('./config/tasks/common/js')
 const configureFonts = require('./config/tasks/common/fonts')
 const configureImages = require('./config/tasks/common/images')
 
+const CopyPlugin = require('copy-webpack-plugin')
+
 const webpackConfig = {
-  entry: './src/client/js/main.js',
+  entry: {
+    main: './src/client/js/main.js',
+    'service-worker': './src/client/js/service-worker.js',
+  },
   output: {
     path: config.paths.dist.base,
-    filename: '[name].js',
+    filename: `[name].js`,
+    publicPath: config.paths.publicPath
   },
   module: {
     rules: [
@@ -25,11 +29,14 @@ const webpackConfig = {
     ],
   },
   plugins: [
-    new GenerateSW({
-      // these options encourage the ServiceWorkers to get in there fast
-      // and not allow any straggling "old" SWs to hang around
-      clientsClaim: true,
-      skipWaiting: true,
+    new CopyPlugin({
+      patterns: [
+        {
+          from: 'src/client/images/manifest',
+          to: 'assets/images/manifest' 
+        },
+        `${config.paths.src.base}client/manifest.json`
+      ],
     })
   ]
 }
