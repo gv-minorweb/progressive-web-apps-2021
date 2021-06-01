@@ -2,15 +2,26 @@
   "name": "progressive-web-apps-2021",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "src/server/server.js",
   "engines": {
     "node": ">=14.15.0",
     "npm": ">=6.14.8"
   },
   "scripts": {
-    "start": "node src/server/server.js",
-    "dev": "nodemon src/server/server.js"
+    "prestart": "npm run build:html",
+    "start": "webpack serve --config webpack.dev.js",
+    "poststart": "npm run watch:html",
+    "build": "npm-run-all build:*",
+    "build:static": "webpack --config webpack.prod.js",
+    "build:html": "node config/tasks/common/html.js",
+    "serve": "serve dist",
+    "watch": "run-p watch:*",
+    "watch:html": "chokidar 'src/server/views/**/*.njk' --command 'npm run build:html'",
+    "watch:static": "chokidar 'src/client/**/*' --command 'npm run build:static'",
+    "server": "node src/server/server.js",
+    "server-dev": "nodemon src/server/server.js"
   },
+  "browserslist": "> 0.25%, not dead",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gv-minorweb/progressive-web-apps-2021.git"
@@ -22,26 +33,37 @@
   },
   "homepage": "https://github.com/gv-minorweb/progressive-web-apps-2021#readme",
   "dependencies": {
+    "@babel/runtime": "^7.14.0",
+    "app-root-path": "^3.0.0",
     "dotenv": "^8.2.0",
-    "ejs": "^3.1.6",
     "express": "^4.17.1",
     "node-fetch": "^2.6.1",
     "nunjucks": "^3.2.3"
   },
   "devDependencies": {
     "@babel/core": "^7.13.8",
+    "@babel/plugin-transform-runtime": "^7.13.15",
     "@babel/preset-env": "^7.13.9",
     "babel-loader": "^8.2.2",
+    "chokidar-cli": "^2.1.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^8.1.1",
     "css-loader": "^5.1.1",
+    "css-minimizer-webpack-plugin": "^1.3.0",
     "eslint": "^7.21.0",
     "eslint-plugin-node": "^11.1.0",
     "mini-css-extract-plugin": "^1.3.9",
     "nodemon": "^2.0.7",
-    "optimize-css-assets-webpack-plugin": "^5.0.4",
+    "npm-run-all": "^4.1.5",
     "postcss-loader": "^5.1.0",
+    "sass": "^1.32.8",
     "sass-loader": "^11.0.1",
+    "serve": "^11.3.2",
     "style-loader": "^2.0.0",
     "webpack": "^5.24.4",
-    "webpack-cli": "^4.5.0"
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2",
+    "webpack-merge": "^5.7.3",
+    "workbox-webpack-plugin": "^6.1.2"
   }
 }

@@ -4,27 +4,29 @@
 
 {% macro Hero(data) %}
 
-<article class="hero" data-id="${id}">
+<article class="hero" data-id="{{ data.content.id }}">
   <div class="hero__content">
     <div class="container">
-      <p class="hero__content__release" >{{ data[0].release_date.split('-', 1)[0] }}</p>
-      <h1 class="hero__content__title">{{ data[0].title }}</h1>
-      <p class="hero__content__description" >{{ data[0].overview }}</p>
-      {{ Button({ text: 'Button text' }) }}
+      <p class="hero__content__release" >{{ data.content.release_date.split('-', 1)[0] }}</p>
+      <h1 class="hero__content__title">{{ data.content.title }}</h1>
+      <p class="hero__content__description" >{{ data.content.overview }}</p>
+      {{ Button({ text: 'Watch movie', link: '/movie/' + data.content.id }) }}
     </div>
   </div>
 
+  {% if data.sliderContent %}
   <div class="hero__nav row">
     <div class="container">
       <h2 class="row__header">In Theatres</h2>
     </div>
 
-    {{ Slider(data) }}
+    {{ Slider(data.sliderContent) }}
     
   </div>
+  {% endif %}
 
   <div class="hero__background">
-    <img src="https://image.tmdb.org/t/p/original{{ data[0].backdrop_path }}" alt="{{ data[0].title }}" />
+    <img src="https://image.tmdb.org/t/p/original{{ data.content.backdrop_path }}" alt="{{ data.content.title }}" />
   </div>
 </article>
   
